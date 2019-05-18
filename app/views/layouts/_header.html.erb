@@ -1,0 +1,14 @@
+<header class="navbar navbar-fixed-top navbar-inverse bar">
+  <div class="container">
+    <%= link_to "TRIP EXPERIENCE SHARING", root_path, id: "logo" %>
+    <nav>
+      <ul class="nav navbar-nav navbar-right">
+        <% if user_signed_in? %>
+          <li><%= link_to "Home", root_path %></li>
+          <li><%= link_to "Change Password", edit_user_registration_path(current_user) %></li>
+          <li><%= link_to "Log out",  destroy_user_session_path, method: "delete" %></li>
+        <% end %>
+      </ul>
+    </nav>
+  </div>
+</header>
