@@ -1,0 +1,23 @@
+<table class="table table-hover">
+	<thead>
+		<th>Sent Requests</th>
+	</thead>
+	<% @outgoing.each do |user| %>
+		<tr id="friend_list_<%= user.id %>">
+			<td colspan="8"><%= user.name %></td>
+			<td colspan="8"><%= link_to "Cancel Request", friend_request_path(user), :method => :delete %></td>
+		</tr>
+	<% end %>
+</table>
+
+<table class="table table-hover">
+	<thead>
+		<th>Suggestions</th>
+	</thead>
+	<% @users.each do |user| %>
+		<tr id="friend_list_<%= user.id %>">
+			<td colspan="8"><%= user.name %></td>
+			<td colspan="8"><%= link_to "Add Friend", friend_requests_path(friend_id: user.id), method: :post %></td>
+		</tr>
+	<% end %>
+</table>
