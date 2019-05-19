@@ -3,7 +3,11 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'visited_locations#index'
 
-  resources :friends, only: [:index, :destroy]
+  resources :friends, only: [:index, :destroy] do
+    collection do
+      get :ranking
+    end
+  end
   resources :friend_requests, except: [:edit, :show]
   resources :users, only: :index
   resources :visited_locations, only: [:index, :create] do

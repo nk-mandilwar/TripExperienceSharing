@@ -17,6 +17,9 @@ class LocationReviewsController < ApplicationController
 		@user = User.find_by_id location_review_params["user_id"]
 		redirect_to root_path if @user != current_user
 		LocationReview.create(location_review_params)
+		@rating = @user.rating
+		@rating ||= Rating.new(user_id: @user.id)
+		@rating.set_rate(location_review_params)
 		redirect_to location_reviews_path(user_id: @user.id)
 	end
 

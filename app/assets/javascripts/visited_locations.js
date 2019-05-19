@@ -1,4 +1,4 @@
-$(".visited-locations-index").ready(function() {
+$(document).ready(function() {
   var map = createMap();
 
   var container = document.getElementById('popup');
@@ -23,7 +23,7 @@ $(".visited-locations-index").ready(function() {
     return false;
   };
 
-  map.on('dblclick', function(evt) {
+  map.on('click', function(evt) {
     if (map.getOverlayById('current-location-popup') == null) {
       map.addOverlay(overlay);
     }
