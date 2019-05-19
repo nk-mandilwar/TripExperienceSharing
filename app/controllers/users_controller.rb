@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  
+
   def index
     @users = fetch_unfriend_users
     @outgoing = current_user.requests
@@ -9,6 +9,6 @@ class UsersController < ApplicationController
 
   def fetch_unfriend_users
   	User.fetch_unfriend_users(current_user.id)
-  end  
+  end 
 
 end

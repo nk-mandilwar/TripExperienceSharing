@@ -1,0 +1,23 @@
+<% if @user.present? && @user == current_user %>
+  <h2 class="header-id"> My Visited Locations </h2>
+<% elsif @user.present? %>
+  <h2 class="header-id"> <%= @user.name %> Visited Locations </h2>
+<% else %>
+  <h2 class="header-id"> All Visited Locations </h2>
+<% end %>
+  
+
+<div class="container">
+  <div id="map" class="map"></div>
+  <div id="popup" class="ol-popup">
+    <%= form_tag visited_locations_path, name: 'mark-location', class: 'form' do %>
+      
+      <%= label_tag "city" %>
+      <%= text_field_tag "city", '', class: "form-controll"%>
+      <%= button_tag 'Mark location', class: 'mark-btn btn btn-success btn-sm' %>
+    <% end %>
+    <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+    <div id="popup-content"></div>
+    <%= hidden_field_tag 'user_id', @user.try(:id) %>
+  </div>
+</div>
