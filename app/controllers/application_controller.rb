@@ -25,4 +25,10 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit :account_update, keys: added_attrs
   end
 
+  def verify_user(user)
+    if !(user == current_user || (current_user.friends.include? user))
+      redirect_to root_path
+    end
+  end
+
 end

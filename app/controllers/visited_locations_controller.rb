@@ -2,6 +2,7 @@ class VisitedLocationsController < ApplicationController
   
   def index
   	@user = User.find_by_id params[:user_id]
+  	verify_user(@user) if @user
   end
 
   def create
@@ -17,6 +18,7 @@ class VisitedLocationsController < ApplicationController
 
   def all
   	user = params[:user_id].present? ? User.find_by_id(params[:user_id]) : current_user
+  	verify_user(user)
   	visited_locations = user.visited_locations.select(:latitude, :longitude)
   	friends_visited_locations = params[:user_id].present? ? [] : friends_visited_locations(user)
     render json: {

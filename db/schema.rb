@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_19_120837) do
+ActiveRecord::Schema.define(version: 2019_05_19_144136) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,20 +31,20 @@ ActiveRecord::Schema.define(version: 2019_05_19_120837) do
     t.index ["user_id"], name: "index_friendships_on_user_id"
   end
 
-  create_table "loction_reviews", force: :cascade do |t|
+  create_table "location_reviews", force: :cascade do |t|
     t.integer "rating"
     t.text "feedback"
     t.bigint "user_id"
     t.bigint "visited_location_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_loction_reviews_on_user_id"
-    t.index ["visited_location_id"], name: "index_loction_reviews_on_visited_location_id"
+    t.index ["user_id"], name: "index_location_reviews_on_user_id"
+    t.index ["visited_location_id"], name: "index_location_reviews_on_visited_location_id"
   end
 
   create_table "ratings", force: :cascade do |t|
     t.bigint "user_id"
-    t.integer "points"
+    t.integer "points", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_ratings_on_user_id"
@@ -75,8 +75,8 @@ ActiveRecord::Schema.define(version: 2019_05_19_120837) do
 
   add_foreign_key "friend_requests", "users"
   add_foreign_key "friendships", "users"
-  add_foreign_key "loction_reviews", "users"
-  add_foreign_key "loction_reviews", "visited_locations"
+  add_foreign_key "location_reviews", "users"
+  add_foreign_key "location_reviews", "visited_locations"
   add_foreign_key "ratings", "users"
   add_foreign_key "visited_locations", "users"
 end

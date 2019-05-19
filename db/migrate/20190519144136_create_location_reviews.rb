@@ -1,6 +1,6 @@
-class CreateLoctionReviews < ActiveRecord::Migration[5.2]
+class CreateLocationReviews < ActiveRecord::Migration[5.2]
   def change
-    create_table :loction_reviews do |t|
+    create_table :location_reviews do |t|
       t.integer :rating
       t.text :feedback
       t.references :user, index: true, foreign_key: true

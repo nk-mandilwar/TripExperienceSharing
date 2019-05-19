@@ -1,0 +1,19 @@
+<h1 class="header-id"><%= @visited_location.city %> Review</h1>
+
+<%= form_for(@location_review) do |f| %>
+  <%= f.hidden_field :user_id, value: @user.id %>
+  <%= f.hidden_field :visited_location_id, value: @visited_location.id %>
+  <div class="field">
+    <%= f.label :rating %>
+    <%= f.select :rating, [1,2,3,4,5], prompt: 'rate', class: "form-control", id: "title" %>
+  </div>
+  <br>
+  <div class="field">
+    <%= f.label :feedback %>
+    <%= f.text_area :feedback, rows: 5, class: "form-control" %>
+  </div>
+  <br>
+  <div class="actions">
+    <%= f.submit "Post", class: "btn btn-primary" %>
+  </div>
+<% end %>

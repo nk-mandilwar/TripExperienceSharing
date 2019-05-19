@@ -11,5 +11,6 @@ Rails.application.routes.draw do
   		get :all
   	end
   end
+  resources :location_reviews, only: [:index, :new, :create]
 
 end

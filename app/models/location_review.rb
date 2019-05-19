@@ -1,4 +1,4 @@
-class LoctionReview < ApplicationRecord
+class LocationReview < ApplicationRecord
   belongs_to :user
   belongs_to :visited_location
 end
