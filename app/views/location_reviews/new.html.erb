@@ -1,6 +1,17 @@
 <h1 class="header-id"><%= @visited_location.city %> Review</h1>
 
 <%= form_for(@location_review) do |f| %>
+  <% if @location_review.errors.any? %>
+    <div id="error_explanation">
+      <h5>Please correct the following:</h5>
+
+      <ul>
+      <% @location_review.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
   <%= f.hidden_field :user_id, value: @user.id %>
   <%= f.hidden_field :visited_location_id, value: @visited_location.id %>
   <div class="field">

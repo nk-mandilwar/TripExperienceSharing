@@ -1,8 +1,4 @@
-<% if @user == current_user %>
-	<h1 class="header-id">My Reviews</h1>
-<% else %>
-	<h1 class="header-id"><%= @user.name %> Reviews</h1>
-<% end %>
+<h1 class="header-id"><%= location_reviews_header(@user) %></h1>
 
 <table class="table table-hover">
   <thead>

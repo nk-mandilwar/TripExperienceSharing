@@ -3,7 +3,7 @@ class LocationReviewsController < ApplicationController
 	before_action :set_user, only: :index
 
 	def index
-		@location_reviews = location_reviews
+		@location_reviews = @user.location_reviews
 	end
 
 	def new
@@ -15,12 +15,18 @@ class LocationReviewsController < ApplicationController
 
 	def create
 		@user = User.find_by_id location_review_params["user_id"]
-		redirect_to root_path if @user != current_user
-		LocationReview.create(location_review_params)
-		@rating = @user.rating
-		@rating ||= Rating.new(user_id: @user.id)
-		@rating.set_rate(location_review_params)
-		redirect_to location_reviews_path(user_id: @user.id)
+		@visited_location = VisitedLocation.find_by_id location_review_params[:visited_location_id]
+		redirect_to root_path if @user != current_user || @user != @visited_location.user 
+		@location_review = LocationReview.new(location_review_params)
+		if @location_review.save
+			rating = @user.rating
+			rating ||= Rating.new(user_id: @user.id)
+			rating_service = RatingService.new(location_review_params)
+			rating.set_rate(rating_service.set_rating_points)
+			redirect_to location_reviews_path(user_id: @user.id)
+		else
+			render 'new'
+		end
 	end
 
 	private
@@ -30,13 +36,8 @@ class LocationReviewsController < ApplicationController
 		verify_user(@user)
 	end
 
-	def location_reviews
-		@user.visited_locations.joins("left outer join location_reviews lr on lr.visited_location_id = visited_locations.id").
-		select("visited_locations.id as id, visited_locations.city as city, lr.id as lr_id, lr.rating as rating, lr.feedback as feedback")
-	end
-
 	def location_review_params
-      params.require(:location_review).permit(:user_id, :visited_location_id, :rating, :feedback)
-    end
+    params.require(:location_review).permit(:user_id, :visited_location_id, :rating, :feedback)
+  end
 
 end

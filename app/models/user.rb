@@ -30,5 +30,10 @@ class User < ApplicationRecord
       left outer join friend_requests FR2 ON FR2.friend_id = users.id AND FR2.user_id = #{user_id}").
     where("F.user_id is null AND FR.user_id is null AND FR2.friend_id is null AND users.id != #{user_id}")
   end
+
+  def location_reviews
+    visited_locations.joins("left outer join location_reviews lr on lr.visited_location_id = visited_locations.id").
+    select("visited_locations.id as id, visited_locations.city as city, lr.id as lr_id, lr.rating as rating, lr.feedback as feedback")
+  end
                              
 end
