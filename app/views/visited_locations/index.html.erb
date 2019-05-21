@@ -1,11 +1,4 @@
-<% if @user.present? && @user == current_user %>
-  <h2 class="header-id"> My Visited Locations </h2>
-<% elsif @user.present? %>
-  <h2 class="header-id"> <%= @user.name %> Visited Locations </h2>
-<% else %>
-  <h2 class="header-id"> All Visited Locations </h2>
-<% end %>
-  
+<h2 class="header-id"><%= visited_locations_header(@user) %></h2>  
 
 <div class="container">
   <div id="map" class="map"></div>

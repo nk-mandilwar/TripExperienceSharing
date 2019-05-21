@@ -20,19 +20,12 @@ class VisitedLocationsController < ApplicationController
   	user = params[:user_id].present? ? User.find_by_id(params[:user_id]) : current_user
   	verify_user(user)
   	visited_locations = user.visited_locations.select(:latitude, :longitude)
-  	friends_visited_locations = params[:user_id].present? ? [] : friends_visited_locations(user)
+  	friends_visited_locations = params[:user_id].present? ? [] : user.friends_visited_locations
     render json: {
       success: true, 
       visited_locations: visited_locations,
       friends_visited_locations: friends_visited_locations
     }
   end 
-
-  private 
-
-  def friends_visited_locations(user)
-  	user.friends.joins("inner join visited_locations as vl on vl.user_id = users.id").
-  	 select("vl.longitude as longitude, vl.latitude as latitude")
-  end
 
 end

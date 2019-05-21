@@ -31,9 +31,20 @@ class User < ApplicationRecord
     where("F.user_id is null AND FR.user_id is null AND FR2.friend_id is null AND users.id != #{user_id}")
   end
 
-  def location_reviews
+  def reviewed_locations
     visited_locations.joins("left outer join location_reviews lr on lr.visited_location_id = visited_locations.id").
     select("visited_locations.id as id, visited_locations.city as city, lr.id as lr_id, lr.rating as rating, lr.feedback as feedback")
+  end
+
+  def friends_rating
+    friends.joins("inner join ratings on ratings.user_id = users.id").
+      select("users.name as name, ratings.points as points").
+      order("ratings.points DESC")
+  end
+
+  def friends_visited_locations
+    friends.joins("inner join visited_locations as vl on vl.user_id = users.id").
+     select("vl.longitude as longitude, vl.latitude as latitude")
   end
                              
 end

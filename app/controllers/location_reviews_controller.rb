@@ -3,7 +3,7 @@ class LocationReviewsController < ApplicationController
 	before_action :set_user, only: :index
 
 	def index
-		@location_reviews = @user.location_reviews
+		@location_reviews = @user.reviewed_locations
 	end
 
 	def new
@@ -19,10 +19,9 @@ class LocationReviewsController < ApplicationController
 		redirect_to root_path if @user != current_user || @user != @visited_location.user 
 		@location_review = LocationReview.new(location_review_params)
 		if @location_review.save
-			rating = @user.rating
-			rating ||= Rating.new(user_id: @user.id)
-			rating_service = RatingService.new(location_review_params)
-			rating.set_rate(rating_service.set_rating_points)
+			rating_service = RatingService.new(location_review_params, @user)
+			rating_service.update_rating_points
+			flash[:notice] = "Review successfully saved."
 			redirect_to location_reviews_path(user_id: @user.id)
 		else
 			render 'new'

@@ -15,9 +15,7 @@ class FriendsController < ApplicationController
 
   def ranking
     @rating = current_user.rating
-    @friends_rating = current_user.friends.joins("inner join ratings on ratings.user_id = users.id").
-      select("users.name as name, ratings.points as points").
-      order("ratings.points DESC")
+    @friends_rating = current_user.friends_rating
   end
 
   private
